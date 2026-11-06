@@ -37,4 +37,5 @@ autoplot(pdx_monthly, PASSENGERS) +
        y = "Number of Passengers") +
   theme_minimal()
 
+# Creating data set for forecasting
 write_csv(pdx_monthly, "Data/pdx_monthly.csv")
