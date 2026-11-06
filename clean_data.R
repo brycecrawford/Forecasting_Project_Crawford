@@ -3,7 +3,7 @@ pacman::p_load(tidyverse,fpp3, scales)
 # creating file path to data folder
 folder <- "Data"
 
-files <- list.files(folder, pattern = "\\.csv$", full.names = TRUE)
+files <- list.files(folder, pattern = "^T_T100D.*\\.csv$", full.names = TRUE)
 
 # Loading in data files
 read_one <- function(path) {
@@ -39,4 +39,5 @@ autoplot(pdx_monthly, PASSENGERS) +
 
 
 # Creating data set for forecasting
-write_csv(pdx_monthly, "Data/pdx_monthly.csv")
+dir.create("Data/clean", showWarnings = FALSE)
+write_csv(pdx_monthly, "Data/clean/pdx_monthly.csv")
