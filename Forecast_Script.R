@@ -1,7 +1,7 @@
-pacman::p_load(tidyverse, tsibble, lubridate, ggplot2, fpp3, scales)
+pacman::p_load(tidyverse,fpp3, scales)
 
 # creating file path to data folder
-folder <- "data"
+folder <- "Data"
 
 files <- list.files(folder, pattern = "\\.csv$", full.names = TRUE)
 
@@ -12,7 +12,7 @@ read_one <- function(path) {
     filter( ORIGIN == "PDX")
 }
 
-# Merging dataframes into one and filtering out unwanted variables
+# Combining files and removing cargo-only service classes
 t_100_raw <- map_dfr(files, read_one) |> 
   type_convert() |> 
   filter(!CLASS %in% c("G","P"))
@@ -30,7 +30,6 @@ has_gaps(pdx_monthly)
 
 # Plotting entire series
 autoplot(pdx_monthly, PASSENGERS) +
-  geom_line() +
   scale_y_continuous(labels = label_number(scale = 1e-3)) +
   labs(title = "Monthly Passengers at PDX Airport",
        subtitle = "(In Thousands)",
@@ -38,4 +37,4 @@ autoplot(pdx_monthly, PASSENGERS) +
        y = "Number of Passengers") +
   theme_minimal()
 
-
+write_csv(pdx_monthly, "Data/pdx_monthly.csv")
